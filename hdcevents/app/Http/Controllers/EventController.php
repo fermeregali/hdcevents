@@ -10,9 +10,21 @@ class EventController extends Controller
     //
     public function index() {
 
-        $events= Event::all(); //get all records
+        $search = request('search');
+
+        if( $search) {
+
+            $events = Event::where([
+                ['title','like','%'.$search.'%']
+            ])->get();
+
+        } else {
+            $events= Event::all(); //get all records
+        }
+
+       
     
-        return view('welcome', ['events' => $events]);
+        return view('welcome', ['events' => $events,'search' => $search]);
     }
 
     public function create() {
@@ -36,7 +48,7 @@ class EventController extends Controller
         return view('product', ['id' => $id]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request) { //action for save database
 
 
         $event = new Event;
@@ -45,6 +57,8 @@ class EventController extends Controller
         $event->city = $request->city;
         $event->private = $request->private;
         $event->description = $request->description;
+        $event->items = $request->items;
+        $event->date = $request->date;
 
         //imagem upload
 
