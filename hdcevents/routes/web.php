@@ -11,15 +11,8 @@ Route::get('/events/create', [EventController::class, 'create'])->middleware('au
 Route::get('/events/{id}', [EventController::class, 'show']); // route for Action show
 Route::get('/contact', [EventController::class, 'contact']); // route for Action contact
 Route::post('events',[EventController::class, 'store']) ; // store convercao de laravel
+Route::delete('events/{id}',[EventController::class,'destroy']); // destroy convencao do laravel para delete
+
+Route::get('/dashboard',[EventController::class,'dashboard'])->middleware('auth'); //route for action dashboard with depend auth
 
 
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
