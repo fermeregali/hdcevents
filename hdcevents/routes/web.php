@@ -12,3 +12,13 @@ Route::get('/contact', [EventController::class, 'contact']); // route for Action
 Route::post('events',[EventController::class, 'store']) ; // store convercao de laravel
 
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
