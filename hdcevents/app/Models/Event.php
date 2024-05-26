@@ -17,4 +17,11 @@ class Event extends Model
 
     //Informar para o laravel que possui campo date.
     protected $dates = ['date'];
+
+    public function user() {
+
+        return $this->belongsTo('App\Models\User'); // pertence ao model User
+    }
+
+
 }
