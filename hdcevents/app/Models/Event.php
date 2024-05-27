@@ -18,6 +18,8 @@ class Event extends Model
     //Informar para o laravel que possui campo date.
     protected $dates = ['date'];
 
+    protected $guarded = []; //TUDO QUE FOR ENVIADO PELO POST NAO TEM NENHUM RESTRICAO
+
     public function user() {
 
         return $this->belongsTo('App\Models\User'); // pertence ao model User
