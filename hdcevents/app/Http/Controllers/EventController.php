@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 
+
 class EventController extends Controller
 {
     //
@@ -113,10 +114,15 @@ class EventController extends Controller
 
     public function edit($id) {
 
+        $user = auth()->user();
+
         $event = Event::findOrFail($id);
 
-        return view('events.edit', ['event' => $event]);
+        if($user->id != $event->user_id) {
+            return redirect('/dashboard');
+        }
 
+        return view('events.edit', ['event' => $event]);
     } 
 
     public function update(Request $request) {
@@ -151,6 +157,22 @@ class EventController extends Controller
 
         return redirect('/dashboard')->with('msg','Evento atualizado com sucesso!');
     }
+
+
+    public function joinEvent($id) {
+
+        $user = auth()->user();
+
+        $user->eventsAsParticipant()->attach($id);
+
+        $event = Event::findOrFail($id);
+
+        return redirect('/dashboard')->with('msg', 'Sua presença está confirmada no evento ' . $event->title);
+
+    }
+
+
+  
 
 
 }

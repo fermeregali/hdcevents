@@ -17,4 +17,6 @@ Route::put('events/update/{id}',[EventController::class,'update'])->middleware('
 
 Route::get('/dashboard',[EventController::class,'dashboard'])->middleware('auth'); //route for action dashboard with depend auth
 
+Route::post('/events/join/{id}', [EventController::class, 'joinEvent'])->middleware('auth');
+
 
